@@ -5,7 +5,7 @@
 #Au3Stripper_Parameters=/PreExpand /StripOnly /RM ;/RenameMinimum
 #AutoIt3Wrapper_Compile_both=y
 #AutoIt3Wrapper_Res_Description=LWBlat GUI
-#AutoIt3Wrapper_Res_Fileversion=1.3.2.0
+#AutoIt3Wrapper_Res_Fileversion=1.3.3.0
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) http://lior.weissbrod.com
 
 #cs
@@ -48,8 +48,8 @@ $default_signaturepath="signature.txt"
 $default_bodypath = "body.txt"
 $default_logpath = "log.txt"
 $default_editorpath = "%windir%\notepad.exe"
-$default_blatexepath = "blat.exe"
-$default_blatpath = "blat.dll"
+$default_blatexepath = "full\blat.exe"
+$default_blatpath = "full\blat.dll"
 $default_helppath = ""
 $default_search = "build"
 
@@ -58,7 +58,7 @@ $sPassword = ""
 
 $programname="LWBlat GUI"
 $extension=".ini"
-$version="1.3.2"
+$version="1.3.3"
 $thedate="2017"
 $search_keyword=""
 
