@@ -19,6 +19,7 @@ The user **guinness** from the **portablefreeware.com forums** - for helping to 
    1. [General](#general)
       1. [Is the program portable?](#is-the-program-portable)
       1. [What is the difference between the 32-bit and the 64-bit version?](#what-is-the-difference-between-the-32-bit-and-the-64-bit-version)
+      1. [What is the PortableApps version?](#what-is-the-portableapps-version)
    1. [Window Controls](#window-controls)
       1. [Mail](#mail)
          1. [Why can there only be one attachment?](#why-can-there-only-be-one-attachment)
@@ -73,6 +74,9 @@ Yes, no installation is involved. You need to run the main program, see [usage](
 
 #### What is the difference between the 32-bit and the 64-bit version?
 There are no intentional differences. Even more so, the 32-bit version can still be used in 64-bit operating systems. But the 64-bit version is compiled specifically for such systems.
+
+#### What is the PortableApps version?
+While the program is [portable by design](#is-the-program-portable), this specific version is compatible with PortableApps ([See discussion](#https://portableapps.com/node/26192)).
 
 ### Window Controls
 #### Mail
