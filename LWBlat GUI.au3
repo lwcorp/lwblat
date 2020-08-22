@@ -5,17 +5,24 @@
 #Au3Stripper_Parameters=/PreExpand /StripOnly /RM ;/RenameMinimum
 #AutoIt3Wrapper_Compile_both=y
 #AutoIt3Wrapper_Res_Description=LWBlat GUI
-#AutoIt3Wrapper_Res_Fileversion=1.3.3.0
-#AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) http://lior.weissbrod.com
+#AutoIt3Wrapper_Res_Fileversion=1.3.4
+#AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
-Copyright (C) http://lior.weissbrod.com
+Copyright (C) https://lior.weissbrod.com
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses>.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Additional restrictions under GNU GPL version 3 section 7:
 
@@ -58,8 +65,8 @@ $sPassword = ""
 
 $programname="LWBlat GUI"
 $extension=".ini"
-$version="1.3.3"
-$thedate="2017"
+$version="1.3.4"
+$thedate="2020"
 $search_keyword=""
 
 $configfile = $programname & $extension
@@ -1634,33 +1641,40 @@ Func launchdll($command, $visual=false)
 endfunc
 
 Func about()
-  GUICreate("About " & $programname, 435, -1, -1, -1, -1, $WS_EX_MDICHILD, $MainWindow)
+  GUICreate("About " & $programname, 435, 410, -1, -1, -1, $WS_EX_MDICHILD, $MainWindow)
   $localleft=10
   $localtop=10
   $message=$programname & " - Version " & $version & @crlf & _
-  chr(169) & $thedate & " LWC" & _
-  @crlf & @crlf & _
-  $programname & " is a portable frontend for the command line mail client Blat." & _
-  @crlf & @crlf & _
-  "Look out for newer versions in:"
+  @crlf & _
+  $programname & " is a portable frontend for the command line mail client Blat."
   GUICtrlCreateLabel($message, $localleft, $localtop)
-  $aLabel = GUICtrlCreateLabel("https://sites.google.com/site/lwblat/", $localleft, $localtop+80)
+  $message = chr(169) & $thedate & " LWC"
+  GUICtrlCreateLabel($message, $localleft, ControlGetPos(GUICtrlGetHandle(-1), "", 0)[3]+18)
+  local $aLabel = GUICtrlCreateLabel("https://lior.weissbrod.com", ControlGetPos(GUICtrlGetHandle(-1), "", 0)[2]+10, _
+  ControlGetPos(GUICtrlGetHandle(-1), "", 0)[1]+ControlGetPos(GUICtrlGetHandle(-1), "", 0)[3]-$localtop-12)
   GUICtrlSetFont(-1,-1,-1,4)
   GUICtrlSetColor(-1,0x0000cc)
   GUICtrlSetCursor(-1,0)
-  $message="This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version." & _
-  @crlf & @crlf & _
-  "This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details." & _
-@crlf & @crlf & _
-"You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses>." & _
+  $message="    This program is free software: you can redistribute it and/or modify" & _
+@crlf & "    it under the terms of the GNU General Public License as published by" & _
+@crlf & "    the Free Software Foundation, either version 3 of the License, or" & _
+@crlf & "    (at your option) any later version." & _
+@crlf & _
+@crlf & "    This program is distributed in the hope that it will be useful," & _
+@crlf & "    but WITHOUT ANY WARRANTY; without even the implied warranty of" & _
+@crlf & "    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the" & _
+@crlf & "    GNU General Public License for more details." & _
+@crlf & _
+@crlf & "    You should have received a copy of the GNU General Public License" & _
+@crlf & "    along with this program.  If not, see <https://www.gnu.org/licenses/>." & _
 @crlf & @crlf & _
 "Additional restrictions under GNU GPL version 3 section 7:" & _
 @crlf & @crlf & _
 "* In accordance with item 7b), it is required to preserve the reasonable legal notices/author attributions in the material and in the Appropriate Legal Notices displayed by works containing it (including in the footer)." & _
 @crlf & @crlf & _
 "* In accordance with item 7c), misrepresentation of the origin of the material must be marked in reasonable ways as different from the original version."
-  GUICtrlCreateLabel($message, $localleft, $localtop+105, 420, 250)
-  $okay=GUICtrlCreateButton("OK", $localleft+160, $localtop+360, 100)
+  GUICtrlCreateLabel($message, $localleft, $localtop+85, 420, 280)
+  $okay=GUICtrlCreateButton("OK", $localleft+160, $localtop+365, 100)
 
   GUISetState(@SW_SHOW)
   While 1
