@@ -76,7 +76,7 @@ Yes, no installation is involved. You need to run the main program, see [usage](
 There are no intentional differences. Even more so, the 32-bit version can still be used in 64-bit operating systems. But the 64-bit version is compiled specifically for such systems.
 
 #### What is the PortableApps version?
-While the program is [portable by design](#is-the-program-portable), this specific version is compatible with PortableApps ([See discussion](#https://portableapps.com/node/26192)).
+While the program is [portable by design](#is-the-program-portable), this specific version is compatible with PortableApps ([see forum discussion](https://portableapps.com/node/26192)).
 
 ### Window Controls
 #### Mail
