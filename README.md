@@ -3,34 +3,6 @@
 Special thanks goes to:
 The user **guinness** from the **portablefreeware.com forums** - for helping to optimize the code for v1.3 and employ Blat's Unicode support. 
 
-## Table of Contents  
-1. [Usage](#usage)
-1. [System requirements](#system-requirements)
-1. [Screenshots](#screenshots)
-   1. [The menus](#the-menus)
-   1. [Easy way to search for additional arguments](#easy-way-to-search-for-additional-arguments)
-1. [FAQ](#faq)
-   1. [Introduction](#introduction)
-      1. [What is Blat?](#what-is-blat)
-      1. [What is LWBlat GUI?](#what-is-lwblat-gui)
-      1. [Does LWBlat GUI require Blat itself?](#does-lwblat-gui-require-blat-itself)
-      1. [Does LWBlat GUI use Blat's DLL file?](#does-lwblat-gui-use-blats-dll-file)
-      1. [Why don't you add Blat inside the package?](#why-dont-you-add-blat-inside-the-package)
-   1. [General](#general)
-      1. [Is the program portable?](#is-the-program-portable)
-      1. [What is the difference between the 32-bit and the 64-bit version?](#what-is-the-difference-between-the-32-bit-and-the-64-bit-version)
-      1. [What is the PortableApps version?](#what-is-the-portableapps-version)
-   1. [Window Controls](#window-controls)
-      1. [Mail](#mail)
-         1. [Why can there only be one attachment?](#why-can-there-only-be-one-attachment)
-         1. [How do I actually send?](#how-do-i-actually-send)
-      1. [Options](#options)
-         1. [What is Hostname?](#what-is-hostname)
-         1. [Can I use more charsets?](#can-i-use-more-charsets)
-         1. [Can you include charset X by default?](#can-you-include-charset-x-by-default)
-      1. [Preferences](#preferences)
-         1. [Should I enable absolute paths?](#should-i-enable-absolute-paths)
-
 ## Usage
 All you have to do is launch **LWBlat GUI_x64.exe** or **LWBlat GUI_x32.exe** (see [difference](#what-is-the-difference-between-the-32-bit-and-the-64-bit-version)).
 
