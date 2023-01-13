@@ -5,7 +5,7 @@
 #Au3Stripper_Parameters=/PreExpand /StripOnly /RM ;/RenameMinimum
 #AutoIt3Wrapper_Compile_both=y
 #AutoIt3Wrapper_Res_Description=LWBlat GUI
-#AutoIt3Wrapper_Res_Fileversion=1.3.4
+#AutoIt3Wrapper_Res_Fileversion=1.3.5
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -65,8 +65,8 @@ $sPassword = ""
 
 $programname="LWBlat GUI"
 $extension=".ini"
-$version="1.3.4"
-$thedate="2020"
+$version="1.3.5"
+$thedate="2021"
 $search_keyword=""
 
 $configfile = $programname & $extension
