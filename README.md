@@ -39,6 +39,12 @@ Yes, the sending process is properly done through Blat's DLL file.
 #### Why don't you add Blat inside the package?
 Because it's still a separate program which doesn't even have to be in the same folder.
 
+#### Are the messages sent secured?
+No, because Blat itself doesn't support it. It also means you can't use servers that don't support **insecure** sending. If you like to convince Blat makers to support it, please help asking [for OAuth support](https://sourceforge.net/p/blat/feature-requests/30/) and [for SSL support](https://sourceforge.net/p/blat/feature-requests/8/).
+
+#### Can Blat even be used nowadays if most servers block insecure mode?
+Not directly, because indeed most servers don't allow to use programs like Blat anymore. However, you can still use Blat as a simulator to try out every possible sending option. You can [convince here](https://sourceforge.net/p/blat/feature-requests/31/) Blat makers to add a direct simulation mode. Until then, you can use another simulator like the free open source [Papercut SMTP](https://github.com/ChangemakerStudios/Papercut-SMTP).
+
 ### General
 
 #### Is the program portable?
@@ -60,6 +66,7 @@ Because Blat is usually used for specialized jobs. If you need a full scale mail
 You need to click Create and then Send. The Create button would create a command line to be delivered to Blat. LWBlat GUI would try to make sure the command is technically valid. Once you click Send, LWBlat GUI would interpret Blat's numeric result code.
 
 #### Options
+
 ##### What is Hostname?
 If you leave this field alone, it would be your computer's name on your LAN. It is a required e-mail header. Blat is about the only mailer in the world that lets you anonymize it.
 
