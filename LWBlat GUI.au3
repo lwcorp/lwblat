@@ -5,7 +5,7 @@
 #Au3Stripper_Parameters=/PreExpand /StripOnly /RM ;/RenameMinimum
 #AutoIt3Wrapper_Compile_both=y
 #AutoIt3Wrapper_Res_Description=LWBlat GUI
-#AutoIt3Wrapper_Res_Fileversion=1.3.5
+#AutoIt3Wrapper_Res_Fileversion=1.3.6
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -65,8 +65,8 @@ $sPassword = ""
 
 $programname="LWBlat GUI"
 $extension=".ini"
-$version="1.3.5"
-$thedate="2021"
+$version="1.3.6"
+$thedate="2023"
 $search_keyword=""
 
 $configfile = $programname & $extension
@@ -143,7 +143,7 @@ $Input_subject = GUICtrlCreateInput("", 85, 215, 340, 20)
 GUICtrlCreateLabel("Attachment", 15, 240)
 $Checkbox_attachment = GUICtrlCreateCheckbox("", 85, 240, 20, 20)
 $Input_attachment = GUICtrlCreateInput("", 105, 240, 275, 20)
-GUICtrlSetState($Input_attachment, $GUI_DROPACCEPTED)
+GUICtrlSetState(-1, $GUI_DROPACCEPTED)
 $Button_chooseattachmentpath = GUICtrlCreateButton("Select", 385, 240, 40, 20)
 $env_Input_attachment = GUICtrlCreateInput("", -1, -1)
 GUICtrlSetState(-1, $GUI_HIDE)
@@ -151,7 +151,7 @@ GUICtrlSetState(-1, $GUI_HIDE)
 GUICtrlCreateLabel("Signature", 15, 265)
 $Checkbox_signature = GUICtrlCreateCheckbox("", 85, 265, 20, 20)
 $Input_signature = GUICtrlCreateInput("", 105, 265, 230, 20)
-GUICtrlSetState($Input_signature, $GUI_DROPACCEPTED)
+GUICtrlSetState(-1, $GUI_DROPACCEPTED)
 $env_Input_signature = GUICtrlCreateInput("", -1, -1)
 GUICtrlSetState(-1, $GUI_HIDE)
 $Button_choosesignaturepath = GUICtrlCreateButton("Select", 385, 265, 40, 20)
@@ -160,7 +160,7 @@ $Button_signature = GUICtrlCreateButton("Edit", 340, 265, 40, 20)
 GUICtrlCreateLabel("Body file", 15, 290)
 $Checkbox_bodypath = GUICtrlCreateCheckbox("", 85, 290, 20, 20)
 $Input_file = GUICtrlCreateInput("", 105, 290, 230, 20)
-GUICtrlSetState($Input_file, $GUI_DROPACCEPTED)
+GUICtrlSetState(-1, $GUI_DROPACCEPTED)
 $env_Input_file = GUICtrlCreateInput("", -1, -1)
 GUICtrlSetState(-1, $GUI_HIDE)
 
@@ -183,6 +183,7 @@ GUICtrlCreateLabel("Charset", 15, 73)
 $input_charset=GUICtrlCreateCombo("", 90, 70, 100)
 GUICtrlSetData(-1, $charsets)
 GUICtrlCreateLabel("Auto = iso-8859-1 / UTF-7 / UTF-8", 195, 74)
+GUICtrlSetTip(-1, "Based on the content and server")
 GUICtrlSetFont(-1, 8.4)
 
 GUICtrlCreateLabel("Confirmation", 15, 103)
@@ -194,12 +195,14 @@ $Input_priority = GUICtrlCreateCombo("", 90, 125, 50, 20, $CBS_DROPDOWNLIST)
 GUICtrlSetData(-1, "None|Low|High")
 
 GUICtrlCreateLabel("Max. names", 15, 155)
+GUICtrlSetTip(-1, "Send to groups of <x> number of recipients")
 $Checkbox_maxNames = GUICtrlCreateCheckbox("", 90, 155, 20, 20)
 $Input_maxNames = GUICtrlCreateInput("", 110, 155, 50, 20, $ES_NUMBER + $ES_RIGHT)
 GUICtrlCreateUpdown(-1, bitor($UDS_ARROWKEYS, $UDS_NOTHOUSANDS))
 GUICtrlSetLimit(-1,32767,1)
 
 GUICtrlCreateLabel("Multipart", 15, 180)
+GUICtrlSetTip(-1, "Send multipart messages, breaking attachments on <size>")
 $Checkbox_multipart_yes = GUICtrlCreateCheckbox("", 90, 180, 20, 20)
 $Input_multipart = GUICtrlCreateInput("", 110, 180, 55, 20, $ES_NUMBER + $ES_RIGHT)
 GUICtrlCreateUpdown(-1, bitor($UDS_ARROWKEYS, $UDS_NOTHOUSANDS))
@@ -220,6 +223,7 @@ GUICtrlSetState($Input_log, $GUI_DROPACCEPTED)
 $Button_chooselogpath = GUICtrlCreateButton("Select", 385, 245, 40, 20)
 $Button_log = GUICtrlCreateButton("Edit", 340, 245, 40, 20)
 $Checkbox_timestamp = GUICtrlCreateCheckbox("Use timestamp", 90, 265)
+GUICtrlSetTip(-1, "Add a timestamp is added to each log line")
 $Checkbox_overwritelog = GUICtrlCreateCheckbox("Overwrite", 220, 265)
 $input_debug=GUICtrlCreateCombo("", 305, 269, 110, default, $CBS_DROPDOWNLIST)
 GUICtrlSetData(-1, $default_debug & "|Debug|Superdebug text|Superdebug")
@@ -231,13 +235,17 @@ GUICtrlSetLimit(-1, 32767, 1)
 GUICtrlCreateLabel("(1=infinite)", 150, 292)
 
 GUICtrlCreateLabel("Hostname", 15, 315)
-$Button_hostinfo = GUICtrlCreateButton("?", 67, 315, 20, 20)
-$Input_host = GUICtrlCreateInput("", 90, 315, 290, 20)
+GUICtrlSetTip(-1, "Select the hostname used to send the message via SMTP")
+$Button_hostinfo = GUICtrlCreateButton("Default info", 67, 315, 65, 20)
+GUICtrlSetTip(-1, "Get information about the default hostname")
+$Input_host = GUICtrlCreateInput("", 140, 315, 285, 20)
 
 GUICtrlCreateLabel("Final header 1 (name: value)", 15, 340)
+GUICtrlSetTip(-1, "Custom header")
 $Input_finalheader1 = GUICtrlCreateInput("", 155, 340, 270, 20)
 
 GUICtrlCreateLabel("Final header 2 (name: value)", 15, 365)
+GUICtrlSetTip(-1, "Custom header")
 $Input_finalheader2 = GUICtrlCreateInput("", 155, 365, 270, 20)
 
 GUICtrlCreateLabel("Extra arguments", 15, 390)
@@ -305,10 +313,10 @@ GUICtrlSetState(-1, $GUI_HIDE)
 $Button_choosehelppath = GUICtrlCreateButton("Select", 385, 115, 40, 20)
 
 GUICtrlCreateLabel("File names", 15, 150)
-$Checkbox_absolutepaths = GUICtrlCreateCheckbox("use absolute paths", 85, 150, 125, 20)
+$Checkbox_absolutepaths = GUICtrlCreateCheckbox("Use absolute paths", 85, 150, 125, 20)
 
 GUICtrlCreateLabel("Shutdown", 15, 190)
-$Checkbox_shutdown = GUICtrlCreateCheckbox("shutdown computer", 85, 190, 115, 20)
+$Checkbox_shutdown = GUICtrlCreateCheckbox("Shutdown computer", 85, 190, 115, 20)
 $Input_shutdown = GUICtrlCreateInput("", 205, 190, 40, 20, $ES_NUMBER + $ES_RIGHT)
 GUICtrlCreateLabel("seconds after sending", 250, 190, 180)
 
@@ -317,7 +325,7 @@ GUICtrlCreateTabItem("")   ;==>Preferences
 ; --- Buttons ---
 
 $Button_create = GUICtrlCreateButton("&Create", 5, 445, 85, 25)
-
+GUICtrlSetTip(-1, "Combine all info into a synatx that can be sent")
 $Button_send = GUICtrlCreateButton("&Send", 350, 445, 85, 25)
 
 
@@ -459,7 +467,7 @@ While 1
 
 		Case $msg = $helpitem_blathomepage
 
-			ShellExecute("http://www.blat.net")
+			ShellExecute("https://www.blat.net")
 
 		Case $msg = $helpitem_syntax OR $msg = $helpitem_searchsyntax
 
@@ -892,7 +900,7 @@ While 1
 					if $return_msg<>"" then $return_msg&=@crlf & @crlf
   					$return_msg &= "(Code " & $return_code & ")" & _
 					@crlf & @crlf & _
- 					"- From http://www.blat.net/examples/blat_return_codes.htm"
+ 					"- From https://www.blat.net/examples/blat_return_codes.htm"
 					Msgbox(0, $return_title, $return_msg, default, $MainWindow)
 					If GUICtrlRead($Checkbox_shutdown, 0) = $GUI_CHECKED Then
 						Shutdown(1)
