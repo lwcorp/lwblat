@@ -35,7 +35,7 @@ In accordance with item 7c), misrepresentation of the origin of the material mus
 #include <TabConstants.au3>
 #include <EditConstants.au3>
 #include <ComboConstants.au3>
-#include <GUIConstants.au3>
+#include <GUIConstantsEx.au3>
 #include <UpDownConstants.au3>
 #include <ColorConstants.au3>
 #Include <File.au3>
