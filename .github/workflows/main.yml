@@ -9,8 +9,7 @@ on:
       - 'LICENSE'
       # - 'my-folder/**'
 env:
-  SOURCE_REPO: <SOURCE_REPO_OWNER>/<SOURCE_REPO_NAME>
-jobs:
+  SOURCE_REPO: lwcorp/lwblat
   sync:
     runs-on: ubuntu-latest
     steps:
