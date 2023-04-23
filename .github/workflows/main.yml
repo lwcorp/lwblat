@@ -1,0 +1,44 @@
+name: Sync files
+on:
+  workflow_dispatch: # Adds this workflow as a menu item to allow manual use
+  push:
+    branches: # which branch pushes should trigger the action
+      - master
+    paths:
+      - 'LWSMTP Server.au3'
+      - 'LICENSE'
+      # - 'my-folder/**'
+env:
+  SOURCE_REPO: <SOURCE_REPO_OWNER>/<SOURCE_REPO_NAME>
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.SOURCE_REPO }}
+          ref: master # which branch files/folders to pull from
+          token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Rename files
+        run: mv LICENSE "LICENSE LWSMTP Server"
+      - name: Get user info
+        uses: octokit/request-action@v2.x
+        id: user_info
+        with:
+          route: GET /users/${{ github.actor }}
+          mediaType:
+            previews:
+              - ant-man
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set user info
+        run: |
+          echo "USER_EMAIL=${{ fromJson(steps.user_info.outputs.data).email }}" >> $GITHUB_ENV
+          echo "user=${{ fromJson(steps.user_info.outputs.data).name }}" >> $GITHUB_ENV
+      - name: Sync files
+        run: |
+          git config --global user.email "${{ env.USER_EMAIL }}"
+          git config --global user.name "${{ env.user }}"
+          git remote add target_repo https://github.com/${{ env.GITHUB_REPOSITORY }}
+          git push target_repo master
