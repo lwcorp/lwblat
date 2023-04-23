@@ -9,7 +9,7 @@ on:
       - 'LICENSE'
       # - 'my-folder/**'
 env:
-  SOURCE_REPO: lwcorp/lwblat
+  SOURCE_REPO: lwcorp/lwsmtp-server
   sync:
     runs-on: ubuntu-latest
     steps:
