@@ -15,12 +15,8 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
       - name: Checkout source repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
           ref: master # which branch files/folders to pull from
