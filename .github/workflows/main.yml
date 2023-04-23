@@ -28,9 +28,6 @@ jobs:
         id: user_info
         with:
           route: GET /users/${{ github.actor }}
-          mediaType:
-            previews:
-              - ant-man
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set user info
