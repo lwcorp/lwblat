@@ -1,42 +1,69 @@
-name: Sync files
+name: Pull File from Another Repository on Push
+secrets:
+  SOURCE_REPO: https://github.com/example/source-repo
+  AUTOMATIC_MONITOR # uncomment to not automatically monitor for pushes
+  # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
+  # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
+  # TARGET_BRANCH: target_alternate # uncomment to not push to default branch
+
 on:
-  workflow_dispatch: # Adds this workflow as a menu item to allow manual use
+  workflow_dispatch:
+    if: github.event.inputs.source_branch != ''
+    inputs:
+      source_branch:
+        description: '${{ secrets.SOURCE_BRANCH }}'
+        required: false
   push:
-    branches: # which branch pushes should trigger the action
-      - master
+    if: github.event.inputs.source_branch != ''
+    branches:
+      - ${{ secrets.SOURCE_BRANCH }}
     paths:
-      - 'LWSMTP Server.au3'
-      - 'LICENSE'
-      # - 'my-folder/**'
-env:
-  SOURCE_REPO: lwcorp/lwsmtp-server
+      - ./source-repo/**
 
 jobs:
-  sync:
+  pull-file:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ env.SOURCE_REPO }}
-          ref: master # which branch files/folders to pull from
-          token: ${{ secrets.ACCESS_TOKEN }}
-      - name: Rename files
-        run: mv LICENSE "LICENSE LWSMTP Server"
-      - name: Get user info
-        uses: octokit/request-action@v2.x
-        id: user_info
-        with:
-          route: GET /users/${{ github.actor }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Set user info
+      - name: Check whether to automatically monitor
+        if: ${{ github.event_name != 'workflow_dispatch' && secrets.AUTOMATIC_MONITOR == '' }}
         run: |
-          echo "USER_EMAIL=${{ fromJson(steps.user_info.outputs.data).email }}" >> $GITHUB_ENV
-          echo "user=${{ fromJson(steps.user_info.outputs.data).name }}" >> $GITHUB_ENV
-      - name: Sync files
+          exit 1
+
+      - uses: actions/checkout@v3
+
+      - name: Pull File
+        uses: actions/github-script@v3
+        with:
+          script: |
+            #!/bin/sh
+
+            if [ -n "${{ secrets.TOKEN_NAME }}" ]; then
+              REPO_URL=https://${{ secrets[secrets.TOKEN_NAME] }}@${{ secrets.SOURCE_REPO }}.git
+            else
+              REPO_URL=${{ secrets.SOURCE_REPO }}
+            fi
+
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              if [ -n "${{ github.event.inputs.source_branch }}" ]; then
+                git clone -b ${{ github.event.inputs.source_branch }} $REPO_URL source-repo
+              else
+                git clone $REPO_URL source-repo
+              fi
+            else
+              git clone -b ${{ github.ref }} $REPO_URL source-repo
+            fi
+            cp source-repo/file.txt .
+            mv file.txt foobar.txt
+
+      - name: Commit
         run: |
-          git config --global user.email "${{ env.USER_EMAIL }}"
-          git config --global user.name "${{ env.user }}"
-          git remote add target_repo https://github.com/${{ env.GITHUB_REPOSITORY }}
-          git push target_repo master
+          git add foobar.txt
+          git commit -m "Pulled file from ${{ secrets.SOURCE_REPO }} and renamed."
+
+      - name: Push
+        run: |
+          if [ -n "${{ secrets.TARGET_BRANCH }}" ]; then
+            git push origin ${{ secrets.TARGET_BRANCH }}
+          else
+            git push
+          fi
