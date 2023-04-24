@@ -1,7 +1,7 @@
 name: Pull File from Another Repository on Push
 secrets:
   SOURCE_REPO: https://github.com/example/source-repo
-  AUTOMATIC_MONITOR # uncomment to not automatically monitor for pushes
+  AUTOMATIC_MONITOR: # uncomment to not automatically monitor for pushes
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
   # TARGET_BRANCH: target_alternate # uncomment to not push to default branch
