@@ -1,5 +1,5 @@
 name: Pull File from Another Repository on Push
-secrets:
+env:
   SOURCE_REPO: https://github.com/example/source-repo
   AUTOMATIC_MONITOR: # uncomment to not automatically monitor for pushes
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
@@ -11,12 +11,12 @@ on:
     if: github.event.inputs.source_branch != ''
     inputs:
       source_branch:
-        description: '${{ secrets.SOURCE_BRANCH }}'
+        description: '${{ env.SOURCE_BRANCH }}'
         required: false
   push:
     if: github.event.inputs.source_branch != ''
     branches:
-      - ${{ secrets.SOURCE_BRANCH }}
+      - ${{ env.SOURCE_BRANCH }}
     paths:
       - ./source-repo/**
 
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check whether to automatically monitor
-        if: ${{ github.event_name != 'workflow_dispatch' && secrets.AUTOMATIC_MONITOR == '' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && env.AUTOMATIC_MONITOR == '' }}
         run: |
           exit 1
 
@@ -37,10 +37,10 @@ jobs:
           script: |
             #!/bin/sh
 
-            if [ -n "${{ secrets.TOKEN_NAME }}" ]; then
-              REPO_URL=https://${{ secrets[secrets.TOKEN_NAME] }}@${{ secrets.SOURCE_REPO }}.git
+            if [ -n "${{ env.TOKEN_NAME }}" ]; then
+              REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
             else
-              REPO_URL=${{ secrets.SOURCE_REPO }}
+              REPO_URL=${{ env.SOURCE_REPO }}
             fi
 
             if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -58,12 +58,12 @@ jobs:
       - name: Commit
         run: |
           git add foobar.txt
-          git commit -m "Pulled file from ${{ secrets.SOURCE_REPO }} and renamed."
+          git commit -m "Pulled file from ${{ env.SOURCE_REPO }} and renamed."
 
       - name: Push
         run: |
-          if [ -n "${{ secrets.TARGET_BRANCH }}" ]; then
-            git push origin ${{ secrets.TARGET_BRANCH }}
+          if [ -n "${{ env.TARGET_BRANCH }}" ]; then
+            git push origin ${{ env.TARGET_BRANCH }}
           else
             git push
           fi
