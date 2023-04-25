@@ -3,6 +3,7 @@ env:
   SOURCE_REPO: https://github.com/lwcorp/lwserver-smtp
   AUTOMATIC_MONITOR: true
   FILES: \*.au3,LICENSE # seperate multiple entries with ,
+  FILES_NEW: \*.au3,LICENSE* # seperate multiple entries with ,
   EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
@@ -57,7 +58,7 @@ jobs:
 
       - name: Commit
         run: |
-          git add foobar.txt
+          git add ${{ env.FILES_NEW }}
           git commit -m "Pulled file from ${{ env.SOURCE_REPO }} and renamed."
 
       - name: Push
