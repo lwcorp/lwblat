@@ -58,9 +58,10 @@ jobs:
             git clone -b $REF $REPO_URL source-repo
           fi
           cd source-repo
-          echo $extra
+          echo $EXTRA
           $EXTRA
-          mv $FILES ../
+          echo $FILES_NEW
+          mv $FILES_NEW ../
 
       - name: Commit
         run: |
