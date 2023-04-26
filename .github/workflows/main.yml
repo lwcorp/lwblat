@@ -37,6 +37,8 @@ jobs:
         run: |
           #!/bin/sh
 
+          export GIT_USERNAME=$(whoami)
+          echo $GIT_USERNAME
           if [ -n "${{ env.TOKEN_NAME }}" ]; then
             REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
           else
