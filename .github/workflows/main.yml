@@ -39,6 +39,8 @@ jobs:
 
           export GIT_USERNAME=${{ env.GITHUB_ACTOR }}
           echo $GIT_USERNAME
+          echo ${{ env.GITHUB_REPOSITORY_OWNER }}
+          echo $REPO_URL
           if [ -n "${{ env.TOKEN_NAME }}" ]; then
             REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
           else
