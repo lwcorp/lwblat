@@ -58,8 +58,7 @@ jobs:
           else
             git clone -b $REF $REPO_URL source-repo
           fi
-          dir -l -h .
-          echo USERNAME
+          echo $USERNAME
           cd source-repo
           $EXTRA
           mv $FILES_NEW ../
