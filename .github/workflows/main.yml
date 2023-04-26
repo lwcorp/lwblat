@@ -2,8 +2,8 @@ name: Pull File from Another Repository on Push
 env:
   SOURCE_REPO: https://github.com/lwcorp/lwserver-smtp
   AUTOMATIC_MONITOR: true
-  FILES: \*.au3,LICENSE # seperate multiple entries with ,
-  FILES_NEW: \*.au3,LICENSE* # seperate multiple entries with ,
+  FILES: *.au3,LICENSE # seperate multiple entries with ,
+  FILES_NEW: *.au3,LICENSE* # seperate multiple entries with ,
   EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
@@ -30,31 +30,33 @@ jobs:
         run: |
           exit 1
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@latest
 
       - name: Pull File
-        uses: actions/github-script@v3
+        uses: actions/setup-node@latest
         with:
-          script: |
-            #!/bin/sh
+          node-version: 'latest'
 
-            if [ -n "${{ env.TOKEN_NAME }}" ]; then
-              REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
-            else
-              REPO_URL=${{ env.SOURCE_REPO }}
-            fi
+        run: |
+          #!/bin/sh
 
-            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-              if [ -n "${{ github.event.inputs.source_branch }}" ]; then
-                git clone -b ${{ github.event.inputs.source_branch }} $REPO_URL source-repo
-              else
-                git clone $REPO_URL source-repo
-              fi
+          if [ -n "${{ env.TOKEN_NAME }}" ]; then
+            REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
+          else
+            REPO_URL=${{ env.SOURCE_REPO }}
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ -n "${{ github.event.inputs.source_branch }}" ]; then
+              git clone -b ${{ github.event.inputs.source_branch }} $REPO_URL source-repo
             else
-              git clone -b ${{ github.ref }} $REPO_URL source-repo
+              git clone $REPO_URL source-repo
             fi
-            cp source-repo/{${{ env.FILES }}} .
-            ${{ env.EXTRA }}
+          else
+            git clone -b ${{ github.ref }} $REPO_URL source-repo
+          fi
+          cp source-repo/{${{ env.FILES }}} .
+          ${{ env.EXTRA }}
 
       - name: Commit
         run: |
