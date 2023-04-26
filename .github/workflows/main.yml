@@ -37,15 +37,14 @@ jobs:
         run: |
           #!/bin/sh
 
-          export GIT_USERNAME=${{ env.GITHUB_ACTOR }}
-          echo $GIT_USERNAME
-          echo ${{ env.GITHUB_REPOSITORY_OWNER }}
-          echo $REPO_URL
           if [ -n "${{ env.TOKEN_NAME }}" ]; then
             REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
           else
             REPO_URL=${{ env.SOURCE_REPO }}
           fi
+
+          echo $REPO_URL
+          echo ${{ github.event_name }}
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             if [ -n "${{ github.event.inputs.source_branch }}" ]; then
@@ -56,7 +55,7 @@ jobs:
           else
             git clone -b ${{ github.ref }} $REPO_URL source-repo
           fi
-          cp source-repo/{${{ env.FILES }}} .
+          cp source-repo/{${{ env.FILES }} .
           ${{ env.EXTRA }}
 
       - name: Commit
