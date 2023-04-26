@@ -60,6 +60,7 @@ jobs:
           cd source-repo
           $EXTRA
           mv $FILES_NEW ../
+          cd ..
 
       - name: Commit
         run: |
