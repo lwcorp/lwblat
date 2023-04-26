@@ -5,6 +5,8 @@ env:
   FILES: "*.au3 LICENSE" # seperate multiple entries with ,
   FILES_NEW: "*.au3 LICENSE*" # seperate multiple entries with ,
   EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
+  USERNAME: ${{ github.actor }}
+  ADDRESS_SUFFIX: users.noreply.github.com
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
   # TARGET_BRANCH: target_alternate # uncomment to not push to default branch
@@ -35,7 +37,6 @@ jobs:
 
       - name: Pull File
         env:
-          USERNAME: ${{ github.actor }}
           # THE_TOKEN: ${{ secrets.$TOKEN_NAME }}
           EVENT_NAME: ${{ github.event_name }}
           SOURCE_BRANCH: ${{ github.event.inputs.source_branch }}
@@ -58,7 +59,6 @@ jobs:
           else
             git clone -b $REF $REPO_URL source-repo
           fi
-          echo $USERNAME
           cd source-repo
           $EXTRA
           mv $FILES_NEW ../
@@ -66,6 +66,8 @@ jobs:
 
       - name: Commit
         run: |
+          git config user.name "$USERNAME"
+          git config user.email "$USERNAME@$ADDRESS_SUFFIX"
           git add $FILES_NEW
           git commit -m "Pulled files from $SOURCE_REPO."
 
