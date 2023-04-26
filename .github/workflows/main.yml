@@ -31,7 +31,7 @@ jobs:
           exit 1
 
       - name: Checkout
-        uses: actions/checkout@latest
+        uses: actions/checkout@v3
 
       - name: Pull File
         run: |
