@@ -57,7 +57,8 @@ jobs:
           else
             git clone -b $REF $REPO_URL source-repo
           fi
-          echo  cp source-repo/{$FILES} .
+          dir source-repo
+          echo cp source-repo/{$FILES} .
           cp source-repo/{$FILES} .
           echo $EXTRA
           $EXTRA
