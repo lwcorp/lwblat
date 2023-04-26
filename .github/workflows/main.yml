@@ -57,7 +57,9 @@ jobs:
           else
             git clone -b $REF $REPO_URL source-repo
           fi
-          dir source-repo
+          dir -h source-repo
+          dir -h source-repo/*.ac3
+          dir -h source-repo/LICENSE
           echo cp source-repo/{$FILES} .
           cp source-repo/{$FILES} .
           echo $EXTRA
