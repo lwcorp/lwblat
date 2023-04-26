@@ -43,8 +43,7 @@ jobs:
             REPO_URL=${{ env.SOURCE_REPO }}
           fi
 
-          echo $REPO_URL
-          echo ${{ github.event_name }}
+          echo ${{ env.SOURCE_REPO }}
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             if [ -n "${{ github.event.inputs.source_branch }}" ]; then
