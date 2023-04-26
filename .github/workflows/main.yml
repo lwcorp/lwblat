@@ -5,6 +5,7 @@ env:
   FILES: \*.au3,LICENSE # seperate multiple entries with ,
   FILES_NEW: \*.au3,LICENSE* # seperate multiple entries with ,
   EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
+  TESTING1 : just testing
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
   # TARGET_BRANCH: target_alternate # uncomment to not push to default branch
@@ -35,6 +36,8 @@ jobs:
 
       - name: Pull File
         env:
+          TESTING2 : ${{ env.TESTING1 }}
+          TESTING3 : Another test
           TOKEN_NAME: ${{ env.TOKEN_NAME }}
           # THE_TOKEN: ${{ secrets.$TOKEN_NAME }}
           SOURCE_RERO: ${{ env.SOURCE_REPO }}
@@ -47,6 +50,10 @@ jobs:
           TARGET_BRANCH: ${{ env.TARGET_BRANCH }}
         run: |
           #!/bin/sh
+          
+          echo $TESTING1
+          echo $TESTING2
+          echo $TESTING3
 
           if [ -n "$TOKEN_NAME" ]; then
             REPO_URL=https://$THE_TOKEN@$SOURCE_REPO.git
