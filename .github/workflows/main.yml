@@ -2,8 +2,8 @@ name: Pull File from Another Repository on Push
 env:
   SOURCE_REPO: https://github.com/lwcorp/lwsmtp-server
   AUTOMATIC_MONITOR: true
-  FILES: *.au3,LICENSE # seperate multiple entries with ,
-  FILES_NEW: *.au3,LICENSE* # seperate multiple entries with ,
+  FILES: "*.au3,LICENSE" # seperate multiple entries with ,
+  FILES_NEW: "*.au3,LICENSE*" # seperate multiple entries with ,
   EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
@@ -52,13 +52,14 @@ jobs:
             if [ -n "$SOURCE_BRANCH" ]; then
               git clone -b $SOURCE_BRANCH $REPO_URL source-repo
             else
-              echo git clone $REPO_URL source-repo
               git clone $REPO_URL source-repo
             fi
           else
             git clone -b $REF $REPO_URL source-repo
           fi
+          echo  cp source-repo/{$FILES} .
           cp source-repo/{$FILES} .
+          echo $EXTRA
           $EXTRA
 
       - name: Commit
