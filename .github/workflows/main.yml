@@ -34,38 +34,46 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Pull File
+        env:
+          TOKEN_NAME: ${{ env.TOKEN_NAME }}
+          SOURCE_RERO: ${{ env.SOURCE_REPO }}
+          EVENT_NAME: ${{ github.event_name }}
+          SOURCE_BRANCH: ${{ github.event.inputs.source_branch }}
+          REF: ${{ github.ref }}
+          FILES: ${{ env.FILES }}
+          EXTRA: ${{ env.EXTRA }}
+          FILES_NEW: ${{ env.FILES_NEW }}
+          TARGET_BRANCH: ${{ env.TARGET_BRANCH }}
         run: |
           #!/bin/sh
 
-          if [ -n "${{ env.TOKEN_NAME }}" ]; then
-            REPO_URL=https://${{ secrets[env.TOKEN_NAME] }}@${{ env.SOURCE_REPO }}.git
+          if [ -n "$TOKEN_NAME" ]; then
+            REPO_URL=https://${{ secrets[$TOKEN_NAME] }}@$SOURCE_REPO.git
           else
-            REPO_URL=${{ env.SOURCE_REPO }}
+            REPO_URL=$SOURCE_REPO
           fi
 
-          echo $env:GITHUB_ACTOR
-
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            if [ -n "${{ github.event.inputs.source_branch }}" ]; then
-              git clone -b ${{ github.event.inputs.source_branch }} $REPO_URL source-repo
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ -n "$SOURCE_BRANCH" ]; then
+              git clone -b $SOURCE_BRANCH $REPO_URL source-repo
             else
               git clone $REPO_URL source-repo
             fi
           else
-            git clone -b ${{ github.ref }} $REPO_URL source-repo
+            git clone -b $REF $REPO_URL source-repo
           fi
-          cp source-repo/{${{ env.FILES }} .
-          ${{ env.EXTRA }}
+          cp source-repo/{$FILES} .
+          $EXTRA
 
       - name: Commit
         run: |
-          git add ${{ env.FILES_NEW }}
-          git commit -m "Pulled file from ${{ env.SOURCE_REPO }} and renamed."
+          git add $FILES_NEW
+          git commit -m "Pulled files from $SOURCE_REPO."
 
       - name: Push
         run: |
-          if [ -n "${{ env.TARGET_BRANCH }}" ]; then
-            git push origin ${{ env.TARGET_BRANCH }}
+          if [ -n "$TARGET_BRANCH" ]; then
+            git push origin $TARGET_BRANCH
           else
             git push
           fi
