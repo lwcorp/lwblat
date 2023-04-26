@@ -36,7 +36,6 @@ jobs:
       - name: Pull File
         env:
           # THE_TOKEN: ${{ secrets.$TOKEN_NAME }}
-          SOURCE_RERO: ${{ env.SOURCE_REPO }}
           EVENT_NAME: ${{ github.event_name }}
           SOURCE_BRANCH: ${{ github.event.inputs.source_branch }}
           REF: ${{ github.ref }}
@@ -46,7 +45,7 @@ jobs:
           if [ -n "$TOKEN_NAME" ]; then
             REPO_URL=https://$THE_TOKEN@$SOURCE_REPO.git
           else
-            REPO_URL=$SOURCE_REPO
+            REPO_URL=$SOURCE_REPO.git
           fi
           
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
