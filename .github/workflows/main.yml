@@ -36,7 +36,7 @@ jobs:
       - name: Pull File
         env:
           TOKEN_NAME: ${{ env.TOKEN_NAME }}
-          THE_TOKEN: ${{ secrets[ $TOKEN_NAME] }}
+          THE_TOKEN: ${{ secrets.$TOKEN_NAME }}
           SOURCE_RERO: ${{ env.SOURCE_REPO }}
           EVENT_NAME: ${{ github.event_name }}
           SOURCE_BRANCH: ${{ github.event.inputs.source_branch }}
