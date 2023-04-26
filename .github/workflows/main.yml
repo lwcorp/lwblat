@@ -45,14 +45,14 @@ jobs:
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             if [ -n "${{ github.event.inputs.source_branch }}" ]; then
-              git clone -b ${{ github.event.inputs.source_branch }} $REPO_URL source-repo
+              git clone -b ${{ github.event.inputs.source_branch }} $REPO_URL ${{ env.SOURCE_REPO }}
             else
-              git clone $REPO_URL source-repo
+              git clone $REPO_URL ${{ env.SOURCE_REPO }}
             fi
           else
-            git clone -b ${{ github.ref }} $REPO_URL source-repo
+            git clone -b ${{ github.ref }} $REPO_URL ${{ env.SOURCE_REPO }}
           fi
-          cp source-repo/{${{ env.FILES }}} .
+          cp ${{ env.SOURCE_REPO }}/{${{ env.FILES }}} .
           ${{ env.EXTRA }}
 
       - name: Commit
