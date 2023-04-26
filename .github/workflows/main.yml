@@ -57,14 +57,10 @@ jobs:
           else
             git clone -b $REF $REPO_URL source-repo
           fi
-          dir -l -h source-repo
-          dir -l -h source-repo/*.au3
-          dir -l -h source-repo/LICENSE
-          dir -l -h .
-          echo cp source-repo/{$FILES} .
-          cp source-repo/{$FILES} .
-          echo $EXTRA
+          cd source-repo
+          echo $extra
           $EXTRA
+          mv $FILES ../
 
       - name: Commit
         run: |
