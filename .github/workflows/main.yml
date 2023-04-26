@@ -49,13 +49,13 @@ jobs:
             REPO_URL=$SOURCE_REPO
           fi
           
-          echo $REPO_URL
-
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             if [ -n "$SOURCE_BRANCH" ]; then
               git clone -b $SOURCE_BRANCH $REPO_URL source-repo
             else
+              echo git clone $REPO_URL source-repo
               git clone $REPO_URL source-repo
+              echo Testing
             fi
           else
             git clone -b $REF $REPO_URL source-repo
