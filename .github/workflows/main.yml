@@ -61,7 +61,7 @@ jobs:
           fi
           cd source-repo
           $EXTRA
-          mv $FILES_NEW ../
+          cp -u $FILES_NEW ../
           cd ..
 
       - name: Commit
