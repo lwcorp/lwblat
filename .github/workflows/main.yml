@@ -32,7 +32,7 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' && env.AUTOMATIC_MONITOR == false }}
         run: |
           echo "Set not to run automatically. Exiting."
-          echo "::set-output name=exiting::true"
+          echo "exiting=true" >> $GITHUB_ENV
 
       - name: Checkout
         if: steps.status1.outputs.exiting != 'true'
@@ -84,7 +84,7 @@ jobs:
         run: |
           if git diff --quiet; then
             echo "No changes detected. Exiting."
-            echo "::set-output name=exiting::true"
+            echo "exiting=true" >> $GITHUB_ENV
           fi
           
       - name: Commit
