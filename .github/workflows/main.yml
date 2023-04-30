@@ -42,21 +42,21 @@ jobs:
             token: ${{ secrets[env.TOKEN_NAME] }}
             path: env.PATH_SOURCE_CHECKOUT
 
-        - name: Checkout source with token but without branch
-          if: env.TOKEN_NAME && secrets[env.TOKEN_NAME] && !env.SOURCE_BRANCH
-          uses: actions/checkout@v3
-          with:
-            repository: env.SOURCE_REPO
-            token: ${{ secrets[env.TOKEN_NAME] }}
-            path: env.PATH_SOURCE_CHECKOUT
+      - name: Checkout source with token but without branch
+        if: env.TOKEN_NAME && secrets[env.TOKEN_NAME] && !env.SOURCE_BRANCH
+        uses: actions/checkout@v3
+        with:
+          repository: env.SOURCE_REPO
+          token: ${{ secrets[env.TOKEN_NAME] }}
+          path: env.PATH_SOURCE_CHECKOUT
 
-        - name: Checkout source without token but with branch
-          if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && env.SOURCE_BRANCH
-          uses: actions/checkout@v3
-          with:
-            repository: env.SOURCE_REPO
-            ref: ${{ env.SOURCE_BRANCH }}
-            path: env.PATH_SOURCE_CHECKOUT
+      - name: Checkout source without token but with branch
+        if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && env.SOURCE_BRANCH
+        uses: actions/checkout@v3
+        with:
+          repository: env.SOURCE_REPO
+          ref: ${{ env.SOURCE_BRANCH }}
+          path: env.PATH_SOURCE_CHECKOUT
 
       - name: Checkout source without token and without branch
         if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && !env.SOURCE_BRANCH
