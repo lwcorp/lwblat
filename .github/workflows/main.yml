@@ -8,20 +8,18 @@ env:
   USERNAME: ${{ github.actor }}
   ADDRESS_SUFFIX: users.noreply.github.com
   # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
-  # SOURCE_BRANCH: source_alternate # uncomment to not monitor the default branch
-  # TARGET_BRANCH: target_alternate # uncomment to not push to default branch
+  # SOURCE_BRANCH: source_alternate_branch # uncomment to takes files from a non default source branch
+  # TARGET_BRANCH: target_alternate_branch # uncomment to monitor a non default target branch
+  TARGET_PATH: target_alternate_path # uncomment to monitor a non default target branch
+  PATH_SOURCE_CHECKOUT: temp_folder
 
 on: # Remove # below for non default branches
   workflow_dispatch:
-#    inputs:
-#      source_branch:
-#        description: '${{ env.SOURCE_BRANCH }}'
-#        required: false
   push:
 #    branches:
-#      - ${{ env.SOURCE_BRANCH }}
-    paths:
-      - ./source-repo/**
+#      - ${{ env.TARGET_BRANCH }}
+#    paths:
+#      - ${{ env.TARGET_PATH }}
 
 jobs:
   pull-file:
@@ -35,30 +33,40 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Pull File
-        env:
-          # THE_TOKEN: ${{ secrets.$TOKEN_NAME }}
-          EVENT_NAME: ${{ github.event_name }}
-          SOURCE_BRANCH: ${{ github.event.inputs.source_branch }}
-          REF: ${{ github.ref }}
+      - name: Checkout source with token and branch
+        if: env.TOKEN_NAME && secrets[env.TOKEN_NAME] && env.SOURCE_BRANCH
+        uses: actions/checkout@v3
+        with:
+            repository: env.SOURCE_REPO
+            ref: ${{ env.SOURCE_BRANCH }}
+            token: ${{ secrets[env.TOKEN_NAME] }}
+            path: env.PATH_SOURCE_CHECKOUT
+
+        - name: Checkout source with token but without branch
+          if: env.TOKEN_NAME && secrets[env.TOKEN_NAME] && !env.SOURCE_BRANCH
+          uses: actions/checkout@v3
+          with:
+            repository: env.SOURCE_REPO
+            token: ${{ secrets[env.TOKEN_NAME] }}
+            path: env.PATH_SOURCE_CHECKOUT
+
+        - name: Checkout source without token but with branch
+          if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && env.SOURCE_BRANCH
+          uses: actions/checkout@v3
+          with:
+            repository: env.SOURCE_REPO
+            ref: ${{ env.SOURCE_BRANCH }}
+            path: env.PATH_SOURCE_CHECKOUT
+
+      - name: Checkout source without token and without branch
+        if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && !env.SOURCE_BRANCH
+        uses: actions/checkout@v3
+        with:
+            repository: env.SOURCE_REPO
+            path: env.PATH_SOURCE_CHECKOUT
+
+      - name: Update
         run: |
-          #!/bin/sh
-          
-          if [ -n "$TOKEN_NAME" ]; then
-            REPO_URL=https://$THE_TOKEN@$SOURCE_REPO.git
-          else
-            REPO_URL=$SOURCE_REPO.git
-          fi
-          
-          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-            if [ -n "$SOURCE_BRANCH" ]; then
-              git clone -b $SOURCE_BRANCH $REPO_URL source-repo
-            else
-              git clone $REPO_URL source-repo
-            fi
-          else
-            git clone -b $REF $REPO_URL source-repo
-          fi
           cd source-repo
           $EXTRA
           cp -u $FILES_NEW ../
