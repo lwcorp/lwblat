@@ -34,11 +34,11 @@ jobs:
           echo "exiting1=true" >> $GITHUB_ENV
 
       - name: Checkout
-        if: env.exiting != 'true'
+        if: env.exiting1 != 'true'
         uses: actions/checkout@v3
 
       - name: Checkout source with token and branch
-        if: env.exiting != 'true' && env.THE_SECRET != 'default_value' && env.SOURCE_BRANCH
+        if: env.exiting1 != 'true' && env.THE_SECRET != 'default_value' && env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
@@ -47,7 +47,7 @@ jobs:
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Checkout source with token but without branch
-        if: env.exiting != 'true' && env.THE_SECRET != 'default_value' && !env.SOURCE_BRANCH
+        if: env.exiting1 != 'true' && env.THE_SECRET != 'default_value' && !env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
@@ -55,7 +55,7 @@ jobs:
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Checkout source without token but with branch
-        if: env.exiting != 'true' && env.THE_SECRET == 'default_value' && env.SOURCE_BRANCH
+        if: env.exiting1 != 'true' && env.THE_SECRET == 'default_value' && env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
@@ -63,14 +63,14 @@ jobs:
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Checkout source without token and without branch
-        if: env.exiting != 'true' && env.THE_SECRET == 'default_value' && !env.SOURCE_BRANCH
+        if: env.exiting1 != 'true' && env.THE_SECRET == 'default_value' && !env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Update
-        if: env.exiting != 'true'
+        if: env.exiting1 != 'true'
         run: |
           cd $PATH_SOURCE_CHECKOUT
           $EXTRA
@@ -78,7 +78,7 @@ jobs:
           cd ..
 
       - name: Check for changes
-        if: env.exiting != 'true'
+        if: env.exiting1 != 'true'
         run: |
           if git diff --quiet; then
             echo "No changes detected. Exiting."
@@ -86,7 +86,7 @@ jobs:
           fi
           
       - name: Commit
-        if: env.exiting != 'true' && env.exiting2 != 'true'
+        if: env.exiting1 != 'true' && env.exiting2 != 'true'
         run: |
           git config user.name "$USERNAME"
           git config user.email "$USERNAME@$ADDRESS_SUFFIX"
@@ -94,7 +94,7 @@ jobs:
           git commit -m "Pulled files from $THE_SERVER/$SOURCE_REPO."
 
       - name: Push
-        if: env.exiting != 'true' && env.exiting2 != 'true'
+        if: env.exiting1 != 'true' && env.exiting2 != 'true'
         run: |
           if [ -n "$TARGET_BRANCH" ]; then
             git push origin $TARGET_BRANCH
