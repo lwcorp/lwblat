@@ -11,6 +11,7 @@ env:
   # SOURCE_BRANCH: source_alternate_branch # uncomment to takes files from a non default source branch
   # TARGET_BRANCH: target_alternate_branch # uncomment to monitor a non default target branch
   # TARGET_PATH: target_alternate_path # uncomment to monitor a non default target branch
+  THE_SERVER: ${{ github.server_url }}
   PATH_SOURCE_CHECKOUT: temp_folder
   THE_SECRET: ${{ secrets.TOKEN_NAME || 'default_value' }}
 
@@ -78,7 +79,7 @@ jobs:
           git config user.name "$USERNAME"
           git config user.email "$USERNAME@$ADDRESS_SUFFIX"
           git add $FILES_NEW
-          git commit -m "Pulled files from $SOURCE_REPO."
+          git commit -m "Pulled files from $THE_SERVER/$SOURCE_REPO."
 
       - name: Push
         run: |
