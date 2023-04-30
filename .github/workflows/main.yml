@@ -28,17 +28,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check whether to automatically monitor
-        continue-on-error: true
+        id: status1
         if: ${{ github.event_name != 'workflow_dispatch' && env.AUTOMATIC_MONITOR == false }}
         run: |
           echo "Set not to run automatically. Exiting."
-          exit 1
+          echo "::set-output name=exiting::true"
 
       - name: Checkout
+        if: steps.status1.outputs.exiting != 'true'
         uses: actions/checkout@v3
 
       - name: Checkout source with token and branch
-        if: env.THE_SECRET != 'default_value' && env.SOURCE_BRANCH
+        if: steps.status1.outputs.exiting != 'true' && env.THE_SECRET != 'default_value' && env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
@@ -47,7 +48,7 @@ jobs:
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Checkout source with token but without branch
-        if: env.THE_SECRET != 'default_value' && !env.SOURCE_BRANCH
+        if: steps.status1.outputs.exiting != 'true' && env.THE_SECRET != 'default_value' && !env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
@@ -55,7 +56,7 @@ jobs:
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Checkout source without token but with branch
-        if: env.THE_SECRET == 'default_value' && env.SOURCE_BRANCH
+        if: steps.status1.outputs.exiting != 'true' && env.THE_SECRET == 'default_value' && env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
@@ -63,13 +64,14 @@ jobs:
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Checkout source without token and without branch
-        if: env.THE_SECRET == 'default_value' && !env.SOURCE_BRANCH
+        if: steps.status1.outputs.exiting != 'true' && env.THE_SECRET == 'default_value' && !env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: ${{ env.SOURCE_REPO }}
           path: ${{ env.PATH_SOURCE_CHECKOUT }}
 
       - name: Update
+        if: steps.status1.outputs.exiting != 'true'
         run: |
           cd $PATH_SOURCE_CHECKOUT
           $EXTRA
@@ -77,14 +79,16 @@ jobs:
           cd ..
 
       - name: Check for changes
-        continue-on-error: true
+        id: status2
+        if: steps.status1.outputs.exiting != 'true'
         run: |
           if git diff --quiet; then
             echo "No changes detected. Exiting."
-            exit 1
+            echo "::set-output name=exiting::true"
           fi
           
       - name: Commit
+        if: steps.status1.outputs.exiting != 'true' && steps.status2.outputs.exiting != 'true'
         run: |
           git config user.name "$USERNAME"
           git config user.email "$USERNAME@$ADDRESS_SUFFIX"
@@ -92,6 +96,7 @@ jobs:
           git commit -m "Pulled files from $THE_SERVER/$SOURCE_REPO."
 
       - name: Push
+        if: steps.status1.outputs.exiting != 'true' && steps.status2.outputs.exiting != 'true'
         run: |
           if [ -n "$TARGET_BRANCH" ]; then
             git push origin $TARGET_BRANCH
