@@ -12,6 +12,7 @@ env:
   # TARGET_BRANCH: target_alternate_branch # uncomment to monitor a non default target branch
   TARGET_PATH: target_alternate_path # uncomment to monitor a non default target branch
   PATH_SOURCE_CHECKOUT: temp_folder
+  THE_SECRET: ${{ secrets[env.TOKEN_NAME] || 'default_value' }}
 
 on: # Remove # below for non default branches
   workflow_dispatch:
@@ -34,7 +35,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Checkout source with token and branch
-        if: env.TOKEN_NAME && secrets[env.TOKEN_NAME] && env.SOURCE_BRANCH
+        if: env.THE_SECRET != 'default_value' && env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
             repository: env.SOURCE_REPO
@@ -43,7 +44,7 @@ jobs:
             path: env.PATH_SOURCE_CHECKOUT
 
       - name: Checkout source with token but without branch
-        if: env.TOKEN_NAME && secrets[env.TOKEN_NAME] && !env.SOURCE_BRANCH
+        if: env.THE_SECRET != 'default_value' && !env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: env.SOURCE_REPO
@@ -51,7 +52,7 @@ jobs:
           path: env.PATH_SOURCE_CHECKOUT
 
       - name: Checkout source without token but with branch
-        if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && env.SOURCE_BRANCH
+        if: env.THE_SECRET == 'default_value' && env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
           repository: env.SOURCE_REPO
@@ -59,7 +60,7 @@ jobs:
           path: env.PATH_SOURCE_CHECKOUT
 
       - name: Checkout source without token and without branch
-        if: (!env.TOKEN_NAME || !secrets[env.TOKEN_NAME]) && !env.SOURCE_BRANCH
+        if: env.THE_SECRET == 'default_value' && !env.SOURCE_BRANCH
         uses: actions/checkout@v3
         with:
             repository: env.SOURCE_REPO
