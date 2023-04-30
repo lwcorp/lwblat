@@ -7,12 +7,12 @@ env:
   EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
   USERNAME: ${{ github.actor }}
   ADDRESS_SUFFIX: users.noreply.github.com
-  # TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
+  TOKEN_NAME: ACCESS_TOKEN # uncomment to use a secret with that name
   # SOURCE_BRANCH: source_alternate_branch # uncomment to takes files from a non default source branch
   # TARGET_BRANCH: target_alternate_branch # uncomment to monitor a non default target branch
-  TARGET_PATH: target_alternate_path # uncomment to monitor a non default target branch
+  # TARGET_PATH: target_alternate_path # uncomment to monitor a non default target branch
   PATH_SOURCE_CHECKOUT: temp_folder
-  THE_SECRET: ${{ (env.TOKEN_NAME != '') && secrets[env.TOKEN_NAME] || 'default_value' }}
+  THE_SECRET: ${{ secrets[env.TOKEN_NAME] || 'default_value' }}
 
 on: # Remove # below for non default branches
   workflow_dispatch:
