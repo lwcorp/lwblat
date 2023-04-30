@@ -1,6 +1,6 @@
 name: Pull File from Another Repository on Push
 env:
-  SOURCE_REPO: https://github.com/lwcorp/lwsmtp-server
+  SOURCE_REPO: github.com/lwcorp/lwsmtp-server
   AUTOMATIC_MONITOR: true
   FILES: "*.au3 LICENSE" # seperate multiple entries with ,
   FILES_NEW: "*.au3 LICENSE*" # seperate multiple entries with ,
