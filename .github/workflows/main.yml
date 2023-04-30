@@ -68,7 +68,7 @@ jobs:
 
       - name: Update
         run: |
-          cd source-repo
+          cd $PATH_SOURCE_CHECKOUT
           $EXTRA
           cp -u $FILES_NEW ../
           cd ..
