@@ -28,8 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check whether to automatically monitor
+        continue-on-error: true
         if: ${{ github.event_name != 'workflow_dispatch' && env.AUTOMATIC_MONITOR == false }}
         run: |
+          echo "Set not to run automatically. Exiting."
           exit 1
 
       - name: Checkout
@@ -75,6 +77,7 @@ jobs:
           cd ..
 
       - name: Check for changes
+        continue-on-error: true
         run: |
           if git diff --quiet; then
             echo "No changes detected. Exiting."
