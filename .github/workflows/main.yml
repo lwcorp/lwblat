@@ -1,4 +1,4 @@
-name: Pull File from Another Repository on Push
+name: Pull Files from Another Repository on Push
 env:
   SOURCE_REPO: lwcorp/lwsmtp-server
   AUTOMATIC_MONITOR: true
