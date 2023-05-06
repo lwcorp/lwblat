@@ -334,6 +334,7 @@ GUICtrlCreateTabItem("")   ;==>Preferences
 $Button_create = GUICtrlCreateButton("&Create", 5, 445, 85, 25)
 GUICtrlSetTip(-1, "Combine all info into a synatx that can be sent")
 $Button_simulator = GUICtrlCreateButton("&Open Simulator", 170, 445, 85, 25)
+GUICtrlSetTip(-1, "Simulate how the messages will appear in the inbox without actually sending them")
 $Button_send = GUICtrlCreateButton("&Send", 350, 445, 85, 25)
 
 
