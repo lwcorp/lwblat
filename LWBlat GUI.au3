@@ -5,7 +5,7 @@
 #Au3Stripper_Parameters=/PreExpand /StripOnly /RM ;/RenameMinimum
 #AutoIt3Wrapper_Compile_both=y
 #AutoIt3Wrapper_Res_Description=LWBlat GUI
-#AutoIt3Wrapper_Res_Fileversion=1.3.6
+#AutoIt3Wrapper_Res_Fileversion=1.4.0
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -30,6 +30,7 @@ In accordance with item 7b), it is required to preserve the reasonable legal not
 In accordance with item 7c), misrepresentation of the origin of the material must be marked in reasonable ways as different from the original version.
 #ce
 
+#include <GuiButton.au3>
 #include <WinAPI.au3>
 #include <WindowsConstants.au3>
 #include <TabConstants.au3>
@@ -41,6 +42,7 @@ In accordance with item 7c), misrepresentation of the origin of the material mus
 #Include <File.au3>
 #include <Inet.au3>
 #include <Crypt.au3>
+#include <LWSMTP Server.au3>
 
 $default_content_type="Plain Text"
 $html_content_type="HTML"
@@ -69,6 +71,10 @@ $version="1.3.6"
 $thedate="2023"
 $search_keyword=""
 
+if $cmdline[0]>0 then
+	exit launchdll_execute($cmdline[1], StringEncrypt(False, $cmdline[ubound($cmdline)-1]))
+EndIf
+
 $configfile = $programname & $extension
 $windowtitle = $programname & " - " & $configfile
 
@@ -94,8 +100,9 @@ $fileitem_load = GUICtrlCreateMenuItem("&Load default", $filemenu)
 $fileitem_reset = GUICtrlCreateMenuItem("&Reset default", $filemenu)
 
 $commandmenu = GUICtrlCreateMenu("C&ommand")
-$commanditem_create = GUICtrlCreateMenuItem("C&reate", $commandmenu)
-$commanditem_send = GUICtrlCreateMenuItem("S&end", $commandmenu)
+$commanditem_create = GUICtrlCreateMenuItem("&Create", $commandmenu)
+$commanditem_simulator = GUICtrlCreateMenuItem("&Open Simulator", $commandmenu)
+$commanditem_send = GUICtrlCreateMenuItem("&Send", $commandmenu)
 
 $profilemenu = GUICtrlCreateMenu("&Profiles")
 $profileitem_listprofiles = GUICtrlCreateMenuItem("&List installed profiles", $profilemenu)
@@ -326,6 +333,7 @@ GUICtrlCreateTabItem("")   ;==>Preferences
 
 $Button_create = GUICtrlCreateButton("&Create", 5, 445, 85, 25)
 GUICtrlSetTip(-1, "Combine all info into a synatx that can be sent")
+$Button_simulator = GUICtrlCreateButton("&Open Simulator", 170, 445, 85, 25)
 $Button_send = GUICtrlCreateButton("&Send", 350, 445, 85, 25)
 
 
@@ -339,7 +347,13 @@ GUISetState()
 
 While 1
 
-	$msg = GUIGetMsg()
+  local $msg_array = GUIGetMsg(1); Use advanced parameter to get array to support multiple menus
+  local $msg = $msg_array[0]
+  If Not IsHWnd($msg_array[1]) Then ContinueLoop; preventing subsequent lines from processing when nothing happens
+  global $used_simulator = IsDeclared("simulator_MainWindow") and IsHWnd($simulator_MainWindow)
+  Switch $msg_array[1]; check which GUI sent the message
+
+   case $MainWindow
 
 	Select
 
@@ -586,13 +600,15 @@ While 1
 				$_hostname = ' -hostname "' & GUICtrlRead($Input_host, 1) & '"'
 			EndIf
 
-			If GUICtrlRead($Input_server, 1) = "" Then
+			if $used_simulator then
+				$_server = ' -server "' & GUICtrlRead($simulator_hIP, 1) & '"'
+			ElseIf GUICtrlRead($Input_server, 1) = "" Then
 				$_server = ''
 			Else
 				$_server = ' -server "' & GUICtrlRead($Input_server, 1) & '"'
 			EndIf
 
-			If GUICtrlRead($Input_port, 1) = "" Then
+			If $used_simulator or GUICtrlRead($Input_port, 1) = "" Then
 				$_port = ''
 			Else
 				$_port = ' -port ' & GUICtrlRead($Input_port, 1)
@@ -861,6 +877,16 @@ While 1
 			If Not $val_msg = "" Then
 				MsgBox(262144, "Warning", $val_msg, default, $MainWindow)
 			EndIf
+
+		Case $msg = $Button_simulator Or $msg = $commanditem_simulator
+
+			if $used_simulator then
+				GUIDelete($simulator_MainWindow)
+				_simulator_OnExit()
+			else
+				simulator($MainWindow, -WinGetPos($MainWindow)[2]+44, WinGetPos($MainWindow)[1]+22)
+			EndIf
+			_GUICtrlButton_Click($Button_create)
 
 		Case $msg = $Button_send Or $msg = $commanditem_send
 
@@ -1144,6 +1170,11 @@ While 1
 			EndIf
 
 	EndSelect
+
+   case $simulator_MainWindow
+	simulator_choices($msg)
+
+  EndSwitch
 
 WEnd
 
@@ -1639,8 +1670,17 @@ Func launchdll($command, $visual=false)
 		if $visual then
 			GUICtrlSetState($Button_send, $GUI_DISABLE)
 		endif
-		$return_code = DllCall($blatpath_temp,"int","SendW","wstr", $command) ; W/w is for Unicode support
-		$return_code = $return_code[0]
+;		$return_code = DllCall($blatpath_temp,"int","SendW","wstr", $command) ; W/w is for Unicode support
+;		$return_code = $return_code[0]
+		if ($used_simulator) then
+			if @Compiled Then
+				$return_code = ShellExecuteWait(@ScriptName, chr(34) & $blatpath_temp & chr(34) & " " & $command)
+			Else
+				$return_code = ShellExecuteWait(@AutoItExe, chr(34) & @ScriptName & chr(34) & " " & chr(34) & $blatpath_temp & chr(34) & " " & StringEncrypt(True, $command))
+			EndIf
+		Else
+			$return_code = launchdll_execute($blatpath_temp, $command)
+		endif
 		if $visual then
 			GUICtrlSetState($Button_send, $GUI_ENABLE)
 		endif
@@ -1649,6 +1689,11 @@ Func launchdll($command, $visual=false)
 	endif
 	return $return_code
 endfunc
+
+Func launchdll_execute($path, $command)
+	local $return_code = DllCall($path,"int","SendW","wstr", $command) ; W/w is for Unicode support
+	return $return_code[0]
+EndFunc
 
 Func about()
   GUICreate("About " & $programname, 435, 410, -1, -1, -1, $WS_EX_MDICHILD, $MainWindow)
