@@ -225,8 +225,8 @@ $Button_log = GUICtrlCreateButton("Edit", 340, 245, 40, 20)
 $Checkbox_timestamp = GUICtrlCreateCheckbox("Use timestamp", 90, 265)
 GUICtrlSetTip(-1, "Add a timestamp is added to each log line")
 $Checkbox_overwritelog = GUICtrlCreateCheckbox("Overwrite", 220, 265)
-$input_debug=GUICtrlCreateCombo("", 305, 269, 110, default, $CBS_DROPDOWNLIST)
-GUICtrlSetData(-1, $default_debug & "|Debug|Superdebug text|Superdebug")
+$input_debug=GUICtrlCreateCombo("", 305, 269, 115, default, $CBS_DROPDOWNLIST)
+GUICtrlSetData(-1, $default_debug & "|Debug|Superdebug text|Superdebug|SuperDuperDebug")
 
 GUICtrlCreateLabel("Send attempts", 15, 290)
 $Input_try = GUICtrlCreateInput("", 90, 290, 55, 20)
@@ -648,6 +648,8 @@ While 1
 					$_log &= ' -superdebugT'
 				elseif GUICtrlRead($input_debug) = "Superdebug" Then
 					$_log &= ' -superdebug'
+				elseif GUICtrlRead($input_debug) = "superDuperDebug" Then
+					$_log &= ' -superDuperDebug'
 				EndIf
 			EndIf
 
