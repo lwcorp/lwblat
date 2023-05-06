@@ -67,7 +67,7 @@ $sPassword = ""
 
 $programname="LWBlat GUI"
 $extension=".ini"
-$version="1.3.6"
+$version="1.4.0"
 $thedate="2023"
 $search_keyword=""
 
