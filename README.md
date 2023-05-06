@@ -12,9 +12,11 @@ Windows 200X, Windows XP, Windows Vista, Windows 7-10
 ## Screenshots
 ### The menus
 
-<img src="https://user-images.githubusercontent.com/1773306/90964671-5c85fb80-e4cb-11ea-83d3-ea8805b569a2.png" alt="Menu 1" width="30%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/1773306/90964683-82ab9b80-e4cb-11ea-9a84-685bfe79b235.png" alt="Menu 2" width="30%">
+<img src="https://user-images.githubusercontent.com/1773306/236648017-b685bb3f-412c-46a8-93ce-666b303277d7.png" alt="Menu 1" width="30%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/1773306/90964683-82ab9b80-e4cb-11ea-9a84-685bfe79b235.png" alt="Menu 2" width="30%">
 
 <img src="https://user-images.githubusercontent.com/1773306/90964691-8e975d80-e4cb-11ea-9727-5b8e265af1bd.png" alt="Menu 3" width="30%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/1773306/90964694-99ea8900-e4cb-11ea-8066-ab535fe47c0c.png" alt="Menu 4" width="30%">
+
+![Simulation mode](https://user-images.githubusercontent.com/1773306/236648078-94b232a1-9807-4c1f-9e89-5cf982c0f18b.png)
 
 ### Easy way to search for additional arguments
 (additional arguments can be used in Options)
