@@ -1675,7 +1675,7 @@ Func launchdll($command, $visual=false)
 ;		$return_code = $return_code[0]
 		if ($used_simulator) then
 			if @Compiled Then
-				$return_code = ShellExecuteWait(@ScriptName, chr(34) & $blatpath_temp & chr(34) & " " & $command)
+				$return_code = ShellExecuteWait(@ScriptName, chr(34) & $blatpath_temp & chr(34) & " " & StringEncrypt(True, $command))
 			Else
 				$return_code = ShellExecuteWait(@AutoItExe, chr(34) & @ScriptName & chr(34) & " " & chr(34) & $blatpath_temp & chr(34) & " " & StringEncrypt(True, $command))
 			EndIf
