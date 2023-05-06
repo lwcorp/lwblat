@@ -17,6 +17,8 @@ Windows 200X, Windows XP, Windows Vista, Windows 7-10
 <img src="https://user-images.githubusercontent.com/1773306/90964691-8e975d80-e4cb-11ea-9727-5b8e265af1bd.png" alt="Menu 3" width="30%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/1773306/90964694-99ea8900-e4cb-11ea-8066-ab535fe47c0c.png" alt="Menu 4" width="30%">
 
 ### The Simulator
+See [more info](#what-does-it-mean-a-simulator)
+
 ![Simulation mode](https://user-images.githubusercontent.com/1773306/236648078-94b232a1-9807-4c1f-9e89-5cf982c0f18b.png)
 
 ### Easy way to search for additional arguments
@@ -46,10 +48,10 @@ Because it's still a separate program which doesn't even have to be in the same 
 No, because Blat itself doesn't support it. It also means you can't use servers that don't support **insecure** sending. If you like to convince Blat makers to support it, please help asking [for OAuth support](https://sourceforge.net/p/blat/feature-requests/30/) and [for SSL support](https://sourceforge.net/p/blat/feature-requests/8/).
 
 #### Can Blat even be used nowadays if most servers block insecure mode?
-Not directly, because indeed most servers don't allow to use programs like Blat anymore. However, you can still use Blat as a simulator to try out every possible sending option. You can [convince here](https://sourceforge.net/p/blat/feature-requests/31/) Blat makers to add a direct simulation mode. Until then, that's why LWBlat GUI has a simulator (an embedded version of [LWSMTP-Server](https://github.com/lwcorp/lwsmtp-server), and of course external simulators can be used as well like [Papercut SMTP](https://github.com/ChangemakerStudios/Papercut-SMTP).
+Not directly, because indeed most servers don't allow to use programs like Blat anymore. However, you can still use Blat as a simulator to try out every possible sending option. You can [convince here](https://sourceforge.net/p/blat/feature-requests/31/) Blat makers to add a direct simulation mode. Until then, that's why LWBlat GUI has a simulator (an embedded version of [LWSMTP-Server](https://github.com/lwcorp/lwsmtp-server), and of course external simulators can be used as well (like [Papercut SMTP](https://github.com/ChangemakerStudios/Papercut-SMTP)).
 
 #### What does it mean a simulator?
-It means you can play around with blat's various settings, then simulate how your message would have been received in someone's inbox.
+As [this screenshot demonstrates](#the-simulator), it means you can play around with blat's various settings, then simulate how your message would have been received in someone's inbox. It's needed because of [Blat's inability to support modern public servers](https://github.com/lwcorp/lwblat/edit/main/README.md#are-the-messages-sent-secured).
 
 ### General
 
