@@ -49,9 +49,11 @@ No, because Blat itself doesn't support it. It also means you can't use servers 
 
 #### Can Blat even be used nowadays if most servers block insecure mode?
 Not directly, because indeed most servers don't allow to use programs like Blat anymore. However, you can still use Blat as a simulator to try out every possible sending option. You can [convince here](https://sourceforge.net/p/blat/feature-requests/31/) Blat makers to add a direct simulation mode. Until then, that's why LWBlat GUI has a simulator (an embedded version of [LWSMTP-Server](https://github.com/lwcorp/lwsmtp-server), and of course external simulators can be used as well (like [Papercut SMTP](https://github.com/ChangemakerStudios/Papercut-SMTP)).
+<br />See [What does it mean a simulator?](#what-does-it-mean-a-simulator)
 
 #### What does it mean a simulator?
-As [this screenshot demonstrates](#the-simulator), it means you can play around with blat's various settings, then simulate how your message would have been received in someone's inbox. It's needed because of [Blat's inability to support modern public servers](https://github.com/lwcorp/lwblat/edit/main/README.md#are-the-messages-sent-secured).
+As [this screenshot demonstrates](#the-simulator), it means you can play around with blat's various settings, then simulate how your message would have been received in someone's inbox. It's needed because of [Blat's inability to support modern public servers](#are-the-messages-sent-secured).
+<br />See [Can Blat even be used nowadays if most servers block insecure mode?](#can-blat-even-be-used-nowadays-if-most-servers-block-insecure-mode)
 
 ### General
 
