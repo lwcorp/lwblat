@@ -8,7 +8,7 @@
 #cs
 [FileVersion]
 #ce
-#AutoIt3Wrapper_Res_Fileversion=1.4.1
+#AutoIt3Wrapper_Res_Fileversion=1.4.2
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -888,7 +888,7 @@ While 1
 				GUIDelete($simulator_MainWindow)
 				_simulator_OnExit()
 			else
-				simulator($MainWindow, -WinGetPos($MainWindow)[2]+44, WinGetPos($MainWindow)[1]-78, "SMTP")
+				simulator($MainWindow, -WinGetPos($MainWindow)[2]+44, WinGetPos($MainWindow)[1]-113, "SMTP")
 			EndIf
 			_GUICtrlButton_Click($Button_create)
 
