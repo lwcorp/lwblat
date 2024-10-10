@@ -5,7 +5,10 @@
 #Au3Stripper_Parameters=/PreExpand /StripOnly /RM ;/RenameMinimum
 #AutoIt3Wrapper_Compile_both=y
 #AutoIt3Wrapper_Res_Description=LWBlat GUI
-#AutoIt3Wrapper_Res_Fileversion=1.4.0
+#cs
+[FileVersion]
+#ce
+#AutoIt3Wrapper_Res_Fileversion=1.4.1
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -42,7 +45,7 @@ In accordance with item 7c), misrepresentation of the origin of the material mus
 #Include <File.au3>
 #include <Inet.au3>
 #include <Crypt.au3>
-#include <LWSMTP Server.au3>
+#include <LWServer.au3>
 
 $default_content_type="Plain Text"
 $html_content_type="HTML"
@@ -67,8 +70,8 @@ $sPassword = ""
 
 $programname="LWBlat GUI"
 $extension=".ini"
-$version="1.4.0"
-$thedate="2023"
+$version =StringRegExpReplace(@Compiled ? StringRegExpReplace(FileGetVersion(@ScriptFullPath), "\.0+$", "") : IniRead(@ScriptFullPath, "FileVersion", "#AutoIt3Wrapper_Res_Fileversion", "0.0.0"), "(\d+\.\d+\.\d+)\.(\d+)", "$1 beta $2")
+$thedate=@YEAR
 $search_keyword=""
 
 if $cmdline[0]>0 then
@@ -885,7 +888,7 @@ While 1
 				GUIDelete($simulator_MainWindow)
 				_simulator_OnExit()
 			else
-				simulator($MainWindow, -WinGetPos($MainWindow)[2]+44, WinGetPos($MainWindow)[1]+22)
+				simulator($MainWindow, -WinGetPos($MainWindow)[2]+44, WinGetPos($MainWindow)[1]-78, "SMTP")
 			EndIf
 			_GUICtrlButton_Click($Button_create)
 
