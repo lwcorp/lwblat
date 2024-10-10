@@ -19,7 +19,8 @@ Windows 200X, Windows XP, Windows Vista, Windows 7-10
 ### The Simulator
 See [more info](#what-does-it-mean-a-simulator)
 
-![Simulation mode](https://user-images.githubusercontent.com/1773306/236648078-94b232a1-9807-4c1f-9e89-5cf982c0f18b.png)
+![Simulation mode](https://github.com/user-attachments/assets/366fb948-6317-4d61-bba3-bb0f53f85988)
+
 
 ### Easy way to search for additional arguments
 (additional arguments can be used in Options)
