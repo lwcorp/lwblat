@@ -1,10 +1,10 @@
 name: Pull Files from Another Repository on Push
 env:
-  SOURCE_REPO: lwcorp/lwsmtp-server
+  SOURCE_REPO: lwcorp/lwserver
   AUTOMATIC_MONITOR: true
   FILES: "*.au3 LICENSE" # separate multiple entries with ,
   FILES_NEW: "*.au3 LICENSE*" # separate multiple entries with ,
-  EXTRA: mv LICENSE LICENSE_LWServer-SMTP # do an extra command like renaming
+  EXTRA: mv LICENSE LICENSE_LWServer # do an extra command like renaming
   USERNAME: ${{ github.actor }}
   ADDRESS_SUFFIX: users.noreply.github.com
   TOKEN_NAME: ACCESS_TOKEN # name of token defined in the target repo's settings, needed for private repos
