@@ -8,7 +8,7 @@
 #cs
 [FileVersion]
 #ce
-#AutoIt3Wrapper_Res_Fileversion=1.4.2
+#AutoIt3Wrapper_Res_Fileversion=1.4.3
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -336,10 +336,12 @@ GUICtrlCreateTabItem("")   ;==>Preferences
 
 $Button_create = GUICtrlCreateButton("&Create", 5, 445, 85, 25)
 GUICtrlSetTip(-1, "Combine all info into a synatx that can be sent")
-$Button_simulator = GUICtrlCreateButton("&Open Simulator", 170, 445, 85, 25)
+$Button_simulator = GUICtrlCreateButton("&Open Simulator", 120, 445, 85, 25)
 GUICtrlSetTip(-1, "Simulate how the messages will appear in the inbox without actually sending them")
-$Button_send = GUICtrlCreateButton("&Send", 350, 445, 85, 25)
-
+$Button_send = GUICtrlCreateButton("&Send", 240, 445, 85, 25)
+GUICtrlCreateLabel("Status:", 330, 451)
+$status = GUICtrlCreateLabel("Pending", 370, 451)
+GUICtrlSetColor(-1, eval("COLOR_BLUE"))
 
 ; --- Command Line ---
 
@@ -904,9 +906,9 @@ While 1
 				if IsNumber($return_code) then
 					switch $return_code
 						case 0
-							$return_title="Success"
+							$return_title="Sent"
 						case Else
-							$return_title="Failure"
+							$return_title="Failed"
 					endswitch
 					switch $return_code
 						Case 2
@@ -933,10 +935,10 @@ While 1
   					$return_msg &= "(Code " & $return_code & ")" & _
 					@crlf & @crlf & _
  					"- From https://www.blat.net/examples/blat_return_codes.htm"
-					Msgbox(0, $return_title, $return_msg, default, $MainWindow)
-					If GUICtrlRead($Checkbox_shutdown, 0) = $GUI_CHECKED Then
-						Shutdown(1)
-						Exit
+					GUICtrlSetData($status, $return_title)
+					Msgbox(($return_code == 0) ? $MB_ICONINFORMATION : $MB_ICONERROR, $return_title, $return_msg, 10, $MainWindow)
+					If $return_code == 0 And GUICtrlRead($Checkbox_shutdown, 0) = $GUI_CHECKED Then
+						AdlibRegister("PerformShutdown", GUICtrlRead($Input_shutdown) * 1000)
 					EndIf
 				EndIf
 			EndIf
@@ -1184,6 +1186,12 @@ WEnd
 
 
 ; --- Functions ---
+
+Func PerformShutdown()
+	AdlibUnRegister("PerformShutdown")
+	Shutdown(1)
+	Exit ; Although it might not be used
+EndFunc
 
 Func StringEncrypt($fEncrypt, $sData)
 	if $sData="" then
