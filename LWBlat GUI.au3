@@ -8,7 +8,7 @@
 #cs
 [FileVersion]
 #ce
-#AutoIt3Wrapper_Res_Fileversion=1.4.3
+#AutoIt3Wrapper_Res_Fileversion=1.4.4
 #AutoIt3Wrapper_Res_LegalCopyright=Copyright (C) https://lior.weissbrod.com
 
 #cs
@@ -50,8 +50,8 @@ In accordance with item 7c), misrepresentation of the origin of the material mus
 $default_content_type="Plain Text"
 $html_content_type="HTML"
 $enriched_content_type="Rich Text"
-$default_charset="Auto"
-$charsets=$default_charset & "|Windows-1255|UTF-8|*Custom*"
+$defaultCharset="Auto"
+$charsets=$defaultCharset & "|Windows-1255|UTF-8|*Custom*"
 $default_profile="Default"
 $profiles=$default_profile & "|*Custom*"
 $default_debug="No debug"
@@ -685,7 +685,7 @@ While 1
 				EndIf
 			EndIf
 
-			If GUICtrlRead($input_charset, 1) = "" OR GUICtrlRead($input_charset, 1) = $default_charset _
+			If GUICtrlRead($input_charset, 1) = "" OR GUICtrlRead($input_charset, 1) = $defaultCharset _
 				OR GUICtrlRead($input_charset, 1) = "*custom*" Then
 				$_charset = ''
 			ElseIf GUICtrlRead($input_charset, 1)="Unicode" then
@@ -1346,7 +1346,7 @@ Func SaveConfig($configfile)
 	save2ini($configfile, "settings", "retry", GUICtrlRead($Input_try, 1))
 
 	If GUICtrlRead($input_charset, 1)="" or GUICtrlRead($input_charset, 1)="*custom*" Then
-		guictrlsetdata($input_charset, $default_charset)
+		guictrlsetdata($input_charset, $defaultCharset)
 	endif
 	save2ini($configfile, "settings", "charset", GUICtrlRead($Input_charset, 1))
 	if GUICtrlRead($Input_priority, 1)="None" OR GUICtrlRead($Input_priority, 1)="low" OR GUICtrlRead($Input_priority, 1)="high" then
@@ -1523,7 +1523,7 @@ Func LoadConfig($configfile)
 	GUICtrlSetData($Input_try, IniRead($configfile, "settings", "retry", "1"))
 
 	$charsets_temp="|" & $charsets
-	$new_charset=IniRead($configfile, "settings", "charset", $default_charset)
+	$new_charset=IniRead($configfile, "settings", "charset", $defaultCharset)
 	if StringRegExp($charsets, $new_charset & "(\||$)")=0 Then
 		$charsets_temp&="|" & $new_charset
 	endif
