@@ -7,7 +7,7 @@ The user **guinness** from the **portablefreeware.com forums** - for helping to 
 All you have to do is launch **LWBlat GUI_x64.exe** or **LWBlat GUI_x32.exe** (see [difference](#what-is-the-difference-between-the-32-bit-and-the-64-bit-version)).
 
 ## System requirements
-Windows 200X, Windows XP, Windows Vista, Windows 7-10
+Windows 200X, Windows XP, Windows Vista, Windows 7-11
 
 ## Screenshots
 ### The menus
