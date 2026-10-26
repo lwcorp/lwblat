@@ -9,7 +9,11 @@ All you have to do is launch **LWBlat GUI_x64.exe** or **LWBlat GUI_x32.exe** (s
 ## System requirements
 Windows 200X, Windows XP, Windows Vista, Windows 7-11
 
+<details>
+<summary>
+  
 ## Screenshots
+</summary>
 ### The menus
 
 <img src="https://user-images.githubusercontent.com/1773306/236648017-b685bb3f-412c-46a8-93ce-666b303277d7.png" alt="Menu 1" width="30%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/1773306/90964683-82ab9b80-e4cb-11ea-9a84-685bfe79b235.png" alt="Menu 2" width="30%">
@@ -27,68 +31,174 @@ See [more info](#what-does-it-mean-a-simulator)
 
 <img src="https://user-images.githubusercontent.com/1773306/90964695-a53db480-e4cb-11ea-91f9-95c901a3e004.png" alt="Search arguments" width="30%">
 
+</details>
+
 ## FAQ
 
 ### Introduction
+
+<details>
+<summary>
+
 #### What is Blat?
+</summary>
+
 Blat is a command line e-mailer for Windows. It's portable, it's small and it pretty much has every sending option one could possibly want. Alas, this abandonware's lack of GUI left it in a very user unfriendly state. That is, until LWBlat GUI came along.
+</details>
+
+<details>
+<summary>
 
 #### What is LWBlat GUI?
+</summary>
+
 LWBlat GUI continues where Blat left off. It combines the power of Blat with a user friendly GUI.
+</details>
+
+<details>
+<summary>
 
 #### Does LWBlat GUI require Blat itself?
+</summary>
+
 Yes, it's a GUI frontend for Blat. The actual mailer is still Blat so be sure to download it too. Then either put LWBlat GUI in the same folder or define Blat's location in LWBlat GUI's preferences.
+</details>
+
+<details>
+<summary>
 
 #### Does LWBlat GUI use Blat's DLL file?
+</summary>
+
 Yes, the sending process is properly done through Blat's DLL file.
+</details>
+
+<details>
+<summary>
 
 #### Why don't you add Blat inside the package?
+</summary>
+
 Because it's still a separate program which doesn't even have to be in the same folder. But if it's important for you, download [the PortableApps version](#what-is-the-portableapps-version).
+</details>
+
+<details>
+<summary>
 
 #### Are the messages sent secured?
+</summary>
+
 No, because Blat itself doesn't support it. It also means you can't use servers that don't support **insecure** sending. If you like to convince Blat makers to support it, please help asking [for OAuth support](https://sourceforge.net/p/blat/feature-requests/30/) and [for SSL support](https://sourceforge.net/p/blat/feature-requests/8/).
+</details>
+
+<details>
+<summary>
 
 #### Can Blat even be used nowadays if most servers block insecure mode?
+</summary>
+
 Not directly, because indeed most servers don't allow to use programs like Blat anymore. However, you can still use Blat as a simulator to try out every possible sending option. You can [convince here](https://sourceforge.net/p/blat/feature-requests/31/) Blat makers to add a direct simulation mode. Until then, that's why LWBlat GUI has a simulator (an embedded version of [LWSMTP-Server](https://github.com/lwcorp/lwsmtp-server), and of course external simulators can be used as well (like [Papercut SMTP](https://github.com/ChangemakerStudios/Papercut-SMTP)).
 <br />See [What does it mean a simulator?](#what-does-it-mean-a-simulator)
+</details>
+
+<details>
+<summary>
 
 #### What does it mean a simulator?
+</summary>
+
 As [this screenshot demonstrates](#the-simulator), it means you can play around with blat's various settings, then simulate how your message would have been received in someone's inbox. It's needed because of [Blat's inability to support modern public servers](#are-the-messages-sent-secured).
 <br />See [Can Blat even be used nowadays if most servers block insecure mode?](#can-blat-even-be-used-nowadays-if-most-servers-block-insecure-mode)
+</details>
 
 ### General
 
+<details>
+<summary>
+
 #### Is the program portable?
+</summary>
+
 Yes, no installation is involved. You need to run the main program, see [usage](#usage).
+</details>
+
+<details>
+<summary>
 
 #### What is the difference between the 32-bit and the 64-bit version?
+</summary>
+
 There are no intentional differences. Even more so, the 32-bit version can still be used in 64-bit operating systems. But the 64-bit version is compiled specifically for such systems.
+</details>
+
+<details>
+<summary>
 
 #### What is the PortableApps version?
+</summary>
+
 While the program is [portable by design](#is-the-program-portable), this specific version is compatible with PortableApps ([see forum discussion](https://portableapps.com/node/26192)).
+</details>
 
 ### Window Controls
 #### Mail
 
+<details>
+<summary>
+
 ##### Why can there only be one attachment?
+</summary>
+
 Because Blat is usually used for specialized jobs. If you need a full scale mailer, there's no point using Blat. With that said, you can use LWBlat GUI's Options to manually supply extra attachments.
+</details>
+
+<details>
+<summary>
 
 ##### How do I actually send?
+</summary>
+
 You need to click Create and then Send. The Create button would create a command line to be delivered to Blat. LWBlat GUI would try to make sure the command is technically valid. Once you click Send, LWBlat GUI would interpret Blat's numeric result code.
+</details>
 
 #### Options
 
+<details>
+<summary>
+
 ##### What is Hostname?
+</summary>
+
 If you leave this field alone, it would be your computer's name on your LAN. It is a required e-mail header. Blat is about the only mailer in the world that lets you anonymize it.
+</details>
+
+<details>
+<summary>
 
 ##### Can I use more charsets?
+</summary>
+
 LWBlat GUI lists some basic charsets. The last item in the list lets you enter any additional charset you like. Your custom choice would be kept in your settings until you change to another charset.
+</details>
+
+<details>
+<summary>
 
 ##### Can you include charset X by default?
+</summary>
+
 You can submit a feature request.
+</details>
 
 #### Preferences
+
+<details>
+<summary>
+
 ##### Should I enable absolute paths?
+</summary>
+
 Only if you want to store the command line and use it in other computers with a different folder structure.
 
 Otherwise, every path setting can be a relative path and even use environmental variables. This makes LWBlat GUI even more portable.
+</details>
